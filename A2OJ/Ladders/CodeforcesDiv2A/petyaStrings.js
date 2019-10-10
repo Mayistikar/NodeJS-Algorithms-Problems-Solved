@@ -6,23 +6,10 @@ const rl = readline.createInterface({
 });
 
 rl.on( 'line', ( line )=>{
-    rl.on( 'line', ( input )=>{        
-        let flag = false;
-        for(let i = 0; i < line.length; i+=1){
-            if( input.toLowerCase().charCodeAt(i) > line.toLowerCase().charCodeAt(i) ){
-                console.log(-1);
-                rl.close();                
-                flag = true;
-                break;
-            }else if( input.toLowerCase().charCodeAt(i) < line.toLowerCase().charCodeAt(i) ){
-                console.log(1);
-                rl.close();
-                flag = true;
-                break;
-            }
-        }        
-        //console.log(`Line: ${line} Input: ${input}`);
-        flag || console.log(0);
+    rl.on( 'line', ( input )=>{ 
+        const totalValueString = ( acum, curr ) => acum + parseInt( curr.charCodeAt(0) );
+        let stringDiff = Array.from(line).reduce( totalValueString, 0 ) - Array.from(input).reduce( totalValueString, 0 );
+        console.log(  stringDiff < 0 ? 1 : stringDiff > 0 ? -1 : 0 );
         rl.close();
     });
 });
